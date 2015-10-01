@@ -2,6 +2,17 @@
   "name": "aaron",
   "description": "fully integrated web-based church management system",
   "version": "0.0.1",
+  "license": "MIT",
+  "author": "Dominik Schreiber <dominik@dominikschreiber.com> (http://dominikschreiber.com)",
+  "contributors": [
+    "Jonas Weber <weber.jonas@gmail.com>",
+    "Dominik Schreiber <dominik@dominikschreiber.com> (http://dominikschreiber.com)"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gjwsw/aaron.git"
+  },
+  "bugs": "https://github.com/gjwsw/aaron/issues",
   "scripts": {
     "postinstall": "npm run postinstall:tsd & npm run postinstall:bower",
     "postinstall:tsd": "./node_modules/.bin/tsd install",
