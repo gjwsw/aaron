@@ -1,0 +1,72 @@
+{
+  "name": "aaron",
+  "description": "fully integrated web-based church management system",
+  "version": "0.0.1",
+  "scripts": {
+    "postinstall": "npm run postinstall:tsd & npm run postinstall:bower",
+    "postinstall:tsd": "./node_modules/.bin/tsd install",
+    "postinstall:bower": "./node_modules/.bin/bower install",
+
+    "info": "npm run info:env",
+    "info:env": "env",
+
+    "clean": "npm run clean:target",
+    "clean:target": "./node_modules/.bin/rimraf $npm_package_config_build_target",
+
+    "validate": "npm run validate:js",
+    "validate:js": "./node_modules/.bin/jshint $npm_package_config_build_src",
+
+    "precompile": "npm run clean && npm run validate",
+    "compile": "npm run compile:src && npm run compile:assets",
+    "compile:src": "./node_modules/.bin/babel $npm_package_config_build_src --out-dir $npm_package_config_build_target",
+    "compile:assets": "rsync -av --ignore-existing $npm_package_config_build_src/* $npm_package_config_build_target",
+
+    "pretest": "npm run compile",
+    "test": "npm run test:target",
+    "test:target": "./node_modules/.bin/mocha \"$npm_package_config_build_target/**/*.spec.js\"",
+
+    "watch": "npm run watch:compile & npm run watch:test",
+    "watch:compile": "npm run watch:compile:src",
+    "watch:compile:src": "./node_modules/.bin/babel $npm_package_config_build_src --out-dir $npm_package_config_build_target --watch",
+    "watch:test": "npm run watch:test:target",
+    "watch:test:target": "./node_modules/.bin/mocha \"$npm_package_config_build_target/**/*.spec.js\" --watch",
+
+    "prestart": "npm run compile",
+    "start": "lib/bin/server",
+
+    "preserve": "npm run compile",
+    "serve": "npm run serve:reload & npm run watch",
+    "serve:reload": "./node_modules/.bin/nodemon $npm_package_config_build_target/bin/server --watch $npm_package_config_build_src --delay 1"
+  },
+  "bin": {
+    "aaron": "lib/bin/server"
+  },
+  "dependencies": {
+    "express": "^4.13.3",
+    "body-parser": "^1.14.1",
+    "orm": "^2.1.27",
+    "sqlite3": "^3.1.0"
+  },
+  "devDependencies": {
+    "babel": "^5.8.23",
+    "jshint": "^2.8.0",
+    "mocha": "^2.2.5",
+    "nodemon": "^1.7.1",
+    "rimraf": "^2.4.3",
+    "supertest": "^1.1.0",
+    "tsd": "^0.6.4",
+    "bower": "^1.5.3"
+  },
+  "config": {
+    "build:target": "./lib",
+    "build:src": "./src",
+    "build:assets": "./src/client",
+
+    "db:name": "aaron",
+    "db:user": "root",
+    "db:pass": "password",
+    "db:host": "localhost",
+    "db:dialect": "sqlite",
+    "db:storage": "./.database.sqlite"
+  }
+}
