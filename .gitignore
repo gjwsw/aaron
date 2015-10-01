@@ -3,5 +3,5 @@
 /src/client/bower_components/
 /coverage/
 /lib/
-database.sqlite
+.database.sqlite
 .DS_Store
