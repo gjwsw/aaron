@@ -1,0 +1,7 @@
+/node_modules/
+/src/typings/
+/src/client/bower_components/
+/coverage/
+/lib/
+database.sqlite
+.DS_Store
