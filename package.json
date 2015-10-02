@@ -24,6 +24,7 @@
     "clean": "npm run clean:target && npm run clean:test",
     "clean:target": "./node_modules/.bin/rimraf $npm_package_config_build_target",
     "clean:test": "./node_modules/.bin/rimraf $npm_package_config_test_sqlitedb",
+    "clean:assets": "./node_modules/.bin/rimraf $npm_package_config_build_target/**/*.{html,png,svg}",
 
     "validate": "npm run validate:js",
     "validate:js": "./node_modules/.bin/jshint $npm_package_config_build_src",
@@ -38,10 +39,11 @@
     "test:target": "./node_modules/.bin/mocha \"$npm_package_config_build_target/**/*.spec.js\"",
 
     "watch": "npm run watch:compile & npm run watch:test",
-    "watch:compile": "npm run watch:compile:src",
-    "watch:compile:src": "./node_modules/.bin/babel $npm_package_config_build_src --out-dir $npm_package_config_build_target --watch",
+    "watch:compile": "npm run watch:compile:src & npm run watch:compile:assets",
+    "watch:compile:src": "npm run compile:src -- --watch",
+    "watch:compile:assets": "watch 'npm run clean:assets && npm run compile:assets' $npm_package_config_build_src",
     "watch:test": "npm run watch:test:target",
-    "watch:test:target": "./node_modules/.bin/mocha \"$npm_package_config_build_target/**/*.spec.js\" --watch",
+    "watch:test:target": "npm run test:target -- --watch",
 
     "prestart": "npm run compile",
     "start": "lib/bin/server",
@@ -68,7 +70,8 @@
     "rimraf": "^2.4.3",
     "supertest": "^1.1.0",
     "tsd": "^0.6.4",
-    "bower": "^1.5.3"
+    "bower": "^1.5.3",
+    "watch": "^0.16.0"
   },
   "config": {
     "build:target": "./lib",
