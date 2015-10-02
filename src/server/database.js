@@ -26,13 +26,15 @@ function getConnectionString() {
     }
 }
 
-export const db = orm.express(getConnectionString(), {
-    define: (db, models, next) => {
-        models.person = person(db);
-        db.sync(err => {
-            if (!err) {
-                next();
-            }
-        });
-    }
-});
+export function db(connection = getConnectionString()) {
+    return orm.express(connection, {
+        define: (db, models, next) => {
+            models.person = person(db);
+            db.sync(err => {
+                if (!err) {
+                    next();
+                }
+            });
+        }
+    });
+}

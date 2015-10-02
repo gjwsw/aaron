@@ -17,7 +17,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 // initialize orm to provide req.models to express routers
-app.use(db);
+app.use(db());
 
 // register routers
 app.use('/api/v1/person', person);
