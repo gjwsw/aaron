@@ -3,5 +3,5 @@
 /src/typings/
 /coverage/
 /lib/
-.database.sqlite
+*.sqlite
 .DS_Store
