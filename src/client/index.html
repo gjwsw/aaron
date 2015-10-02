@@ -1,13 +1,20 @@
 <!doctype html>
 
-<html>
+<html ng-app="aaron" ng-controller="MetaController">
 
 <head>
-    <title>aaron@efg-ludwigshafen.de</title>
+    <title ng-bind="title"></title>
+
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 
 <body>
-    <h1>it works!</h1>
+    <ng-view></ng-view>
+    <script src="/bower_components/angular/angular.min.js"></script>
+    <script src="/bower_components/angular-route/angular-route.min.js"></script>
+    <script src="/app/app.js"></script>
+    <script src="/app/views/index/index.js"></script>
 </body>
 
 </html>
