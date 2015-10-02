@@ -24,6 +24,8 @@ app.use('/api/v1/person', person);
 
 // serve files from ../client as static content
 app.use(express.static(resolve(__dirname, '..', 'client')));
+// serve files from ../../bower_components as static content at /bower_components
+app.use('/bower_components', express.static(resolve(__dirname, '..', '..', 'bower_components')));
 
 // serve index.html if everything else fails
 app.use((req, res) => res.sendFile(resolve(__dirname, '..', 'client/index.html')));

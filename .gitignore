@@ -1,6 +1,6 @@
 /node_modules/
+/bower_components/
 /src/typings/
-/src/client/bower_components/
 /coverage/
 /lib/
 .database.sqlite
