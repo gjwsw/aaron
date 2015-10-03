@@ -23,7 +23,7 @@ angular.module('aaron.view.person', [
 .controller('PersonsController', ($scope, $http, $q, Person) => {
     Person.query(urls => {
         $q.all(urls.map($http.get)).then(results => {
-            $scope.persons = results.map(result => result.data)
+            $scope.persons = results.map(result => result.data);
         });
     });
 })
