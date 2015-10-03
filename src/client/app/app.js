@@ -4,6 +4,7 @@
 
 angular.module('aaron', [
     'aaron.view.index',
+    'aaron.view.person',
     'ngRoute'
   , 'ng'
 ])
