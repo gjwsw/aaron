@@ -49,8 +49,10 @@
     "start": "lib/bin/server",
 
     "preserve": "npm run compile",
-    "serve": "npm run serve:reload & npm run watch",
-    "serve:reload": "./node_modules/.bin/nodemon $npm_package_config_build_target/bin/server --watch $npm_package_config_build_src --delay 1"
+    "serve": "npm run serve:livereload & npm run watch & npm run serve:start & npm run serve:open",
+    "serve:livereload": "./node_modules/.bin/live-reload --port 9091 $npm_package_config_build_src",
+    "serve:start": "./node_modules/.bin/nodemon $npm_package_config_build_target/bin/server --watch $npm_package_config_build_src",
+    "serve:open": "node -e \"require('open')('http://localhost:$npm_package_config_server_port')\""
   },
   "bin": {
     "aaron": "lib/bin/server"
@@ -71,9 +73,13 @@
     "supertest": "^1.1.0",
     "tsd": "^0.6.4",
     "bower": "^1.5.3",
-    "watch": "^0.16.0"
+    "watch": "^0.16.0",
+    "live-reload": "^1.1.0",
+    "open": "^0.0.5"
   },
   "config": {
+    "server:port": "8888",
+
     "build:target": "./lib",
     "build:src": "./src",
     "build:assets": "./src/client",
