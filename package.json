@@ -14,33 +14,36 @@
   },
   "bugs": "https://github.com/gjwsw/aaron/issues",
   "scripts": {
-    "postinstall": "npm run postinstall:tsd & npm run postinstall:bower",
-    "postinstall:tsd": "./node_modules/.bin/tsd install",
-    "postinstall:bower": "./node_modules/.bin/bower install",
+    "postinstall": "parallelshell 'npm run postinstall:tsd' 'npm run postinstall:bower' 'npm run compile'",
+    "postinstall:tsd": "tsd install",
+    "postinstall:bower": "bower install",
 
     "info": "npm run info:env",
     "info:env": "env",
 
     "clean": "npm run clean:target && npm run clean:test",
-    "clean:target": "./node_modules/.bin/rimraf $npm_package_config_build_target",
-    "clean:test": "./node_modules/.bin/rimraf $npm_package_config_test_sqlitedb",
-    "clean:assets": "./node_modules/.bin/rimraf $npm_package_config_build_target/**/*.{html,png,svg}",
+    "clean:target": "rimraf $npm_package_config_build_target",
+    "clean:test": "rimraf $npm_package_config_test_sqlitedb",
+    "clean:assets": "rimraf $npm_package_config_build_target'/**/*.+(html|png|svg)'",
 
     "validate": "npm run validate:js",
-    "validate:js": "./node_modules/.bin/jshint $npm_package_config_build_src",
+    "validate:js": "jshint $npm_package_config_build_src",
 
     "precompile": "npm run clean && npm run validate",
-    "compile": "npm run compile:src && npm run compile:assets",
-    "compile:src": "./node_modules/.bin/babel $npm_package_config_build_src --out-dir $npm_package_config_build_target",
+    "compile": "npm run compile:src && npm run compile:scss && npm run compile:assets",
+    "compile:src": "babel $npm_package_config_build_src --out-dir $npm_package_config_build_target",
+    "compile:scss": "node-sass --output $npm_package_config_build_target/client --output-style compressed $npm_package_config_build_src/client/aaron.scss",
     "compile:assets": "rsync -av --ignore-existing $npm_package_config_build_src/* $npm_package_config_build_target",
 
     "pretest": "npm run compile",
     "test": "npm run test:target",
-    "test:target": "./node_modules/.bin/mocha \"$npm_package_config_build_target/**/*.spec.js\"",
+    "test:target": "multi='mocha-lcov-reporter=- spec=-' mocha \"$npm_package_config_build_target/**/*.spec.js\" --reporter mocha-multi",
+    "test:coverage": "babel-node isparta cover --report lcov mocha --reporter spec --compilers babel:babel/register -- $npm_package_config_build_src/**/*.spec.js",
 
-    "watch": "npm run watch:compile & npm run watch:test",
-    "watch:compile": "npm run watch:compile:src & npm run watch:compile:assets",
+    "watch": "parallelshell 'npm run watch:compile' 'npm run watch:test'",
+    "watch:compile": "parallelshell 'npm run watch:compile:src' 'npm run watch:compile:scss' 'npm run watch:compile:assets'",
     "watch:compile:src": "npm run compile:src -- --watch",
+    "watch:compile:scss": "npm run compile:scss -- --watch",
     "watch:compile:assets": "watch 'npm run clean:assets && npm run compile:assets' $npm_package_config_build_src",
     "watch:test": "npm run watch:test:target",
     "watch:test:target": "npm run test:target -- --watch",
@@ -49,9 +52,9 @@
     "start": "lib/bin/server",
 
     "preserve": "npm run compile",
-    "serve": "npm run serve:livereload & npm run watch & npm run serve:start & npm run serve:open",
-    "serve:livereload": "./node_modules/.bin/live-reload --port 9091 $npm_package_config_build_src",
-    "serve:start": "./node_modules/.bin/nodemon $npm_package_config_build_target/bin/server --watch $npm_package_config_build_src",
+    "serve": "parallelshell 'npm run serve:livereload' 'npm run watch' 'npm run serve:start' 'npm run serve:open'",
+    "serve:livereload": "live-reload --port 9091 $npm_package_config_build_src",
+    "serve:start": "nodemon $npm_package_config_build_target/bin/server --watch $npm_package_config_build_src",
     "serve:open": "node -e \"require('open')('http://localhost:$npm_package_config_server_port')\""
   },
   "bin": {
@@ -62,20 +65,26 @@
     "body-parser": "^1.14.1",
     "orm": "^2.1.27",
     "sqlite3": "^3.1.0",
-    "underscore": "^1.8.3"
+    "underscore": "^1.8.3",
+    "babel": "^5.8.23",
+    "node-sass": "^3.3.3",
+    "jshint": "^2.8.0",
+    "tsd": "^0.6.4",
+    "bower": "^1.5.3"
   },
   "devDependencies": {
-    "babel": "^5.8.23",
-    "jshint": "^2.8.0",
     "mocha": "^2.2.5",
+    "mocha-lcov-reporter": "^1.0.0",
+    "mocha-multi": "^0.7.2",
+    "isparta": "^3.1.0",
+    "codeclimate-test-reporter": "^0.1.1",
     "nodemon": "^1.7.1",
     "rimraf": "^2.4.3",
     "supertest": "^1.1.0",
-    "tsd": "^0.6.4",
-    "bower": "^1.5.3",
     "watch": "^0.16.0",
     "live-reload": "^1.1.0",
-    "open": "^0.0.5"
+    "open": "^0.0.5",
+    "parallelshell": "^2.0.0"
   },
   "config": {
     "server:port": "8888",
