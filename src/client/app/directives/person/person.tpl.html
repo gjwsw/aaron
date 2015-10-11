@@ -1,0 +1,22 @@
+<div class="row">
+    <div class="col-md-12">
+        <header class="page-header">
+            <h1>{{person.givenname}} {{person.familyname}}</h1>
+        </header>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="row" ng-show="person.age !== undefined">
+            <div class="col-md-6 text-right"><strong>Alter</strong></div>
+            <div class="col-md-6">{{person.age}}</div>
+        </div>
+        <div class="row" ng-show="person.sex !== undefined">
+            <div class="col-md-6 text-right"><strong>Geschlecht</strong></div>
+            <div class="col-md-6">{{person.sex}}</div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <img ng-src="{{person.photo}}">
+    </div>
+</div>
