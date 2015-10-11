@@ -3,7 +3,9 @@
 'use strict';
 
 angular.module('aaron.view.person', [
-    'aaron.service.person'
+    'aaron.directive.person'
+  , 'aaron.directive.persons'
+  , 'aaron.service.person'
   , 'ngRoute'
   , 'ng'
 ])
@@ -20,14 +22,8 @@ angular.module('aaron.view.person', [
         });
 })
 
-.controller('PersonsController', ($scope, $http, $q, Person) => {
-    Person.query(urls => {
-        $q.all(urls.map($http.get)).then(results => {
-            $scope.persons = results.map(result => result.data);
-        });
-    });
-})
+.controller('PersonsController', () => {})
 
-.controller('PersonController', ($scope, $routeParams, Person) => {
-    $scope.person = Person.get({id: $routeParams.id});
+.controller('PersonController', ($scope, $routeParams) => {
+    $scope.id = $routeParams.id;
 });
