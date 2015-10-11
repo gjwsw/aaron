@@ -3,5 +3,6 @@
 /src/typings/
 /coverage/
 /lib/
+/.vscode/
 *.sqlite
 .DS_Store
