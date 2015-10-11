@@ -26,8 +26,9 @@
     "clean:test": "rimraf $npm_package_config_test_sqlitedb",
     "clean:assets": "rimraf $npm_package_config_build_target'/**/*.+(html|png|svg)'",
 
-    "validate": "npm run validate:js",
+    "validate": "parallelshell 'npm run validate:js' 'npm run validate:scss'",
     "validate:js": "jshint $npm_package_config_build_src",
+    "validate:scss": "sass-lint $npm_package_config_build_src/**/*.scss",
 
     "precompile": "npm run clean && npm run validate",
     "compile": "npm run compile:src && npm run compile:scss && npm run compile:assets",
@@ -49,7 +50,9 @@
     "watch:test:target": "npm run test:target -- --watch",
 
     "prestart": "npm run compile",
-    "start": "lib/bin/server",
+    "start": "forever start lib/bin/server",
+
+    "stop": "forever stop lib/bin/server",
 
     "preserve": "npm run compile",
     "serve": "parallelshell 'npm run serve:livereload' 'npm run watch' 'npm run serve:start' 'npm run serve:open'",
@@ -69,8 +72,10 @@
     "babel": "^5.8.23",
     "node-sass": "^3.3.3",
     "jshint": "^2.8.0",
+    "sass-lint": "^1.2.3",
     "tsd": "^0.6.4",
-    "bower": "^1.5.3"
+    "bower": "^1.5.3",
+    "forever": "^0.15.1"
   },
   "devDependencies": {
     "mocha": "^2.2.5",
