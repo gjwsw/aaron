@@ -1,0 +1,23 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: $font-family;
+    font-weight: $font-weight-normal-ldpi;
+
+    @media (-webkit-min-device-pixel-ratio: 2),
+           (min-resolution: 192dpi) {
+        font-weight: $font-weight-normal-hdpi;
+    }
+}
+
+b,
+strong {
+    font-weight: $font-weight-bold-ldpi;
+
+    @media (-webkit-min-device-pixel-ratio: 2),
+           (min-resolution: 192dpi) {
+        font-weight: $font-weight-bold-hdpi;
+    }
+}

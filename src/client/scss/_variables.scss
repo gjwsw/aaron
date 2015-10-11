@@ -1,0 +1,40 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic,500,700);
+
+// ===== dimensions =================================================
+
+/**
+ * Basic design unit. Derived values must be integer multiples of $u.
+ *
+ * Chosen as 12 (= 2 * 2 * 3) px with caution, to make $u/2, $u/3
+ * and $u/4 integers.
+ */
+$u: 12px;
+
+$padding: $u;
+$padding-small: $padding * 0.75;
+$padding-large: $padding * 1.5;
+
+$border-radius: $u / 4;
+
+// ===== colors =====================================================
+
+$color-white: #ffffff;
+
+$color-primary: #55ace8;
+$color-primary-weak: lighten($color-primary, 10%);
+
+$color-background: hsl(hue($color-primary), 10%, 98%);
+$color-background-weak: darken($color-background, 10%);
+
+$color-content: hsl(hue($color-primary), 10%, 10%);
+$color-content-weak: lighten($color-content, 10%);
+
+// ===== fonts ======================================================
+
+$font-family: Roboto, 'sans-serif';
+
+$font-weight-normal-ldpi: 400;
+$font-weight-normal-hdpi: 300;
+
+$font-weight-bold-ldpi: 700;
+$font-weight-bold-hdpi: 500;
