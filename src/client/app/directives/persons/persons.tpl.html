@@ -1,0 +1,13 @@
+<div class="row">
+    <a class="col-xs-12 col-sm-6 col-md-4 col-lg-3"
+       ng-repeat="person in persons"
+       ng-href="/person/{{person.id}}">
+        <div class="panel panel-default"
+             ng-repeat="person in persons">
+            <div class="panel-heading"
+                 ng-style="{'background-image': (person.photo) ? 'url(' + person.photo + ')' : ''}">
+                <h3 class="panel-title">{{person.givenname}} {{person.familyname}}</h3>
+            </div>
+        </div>
+    </a>
+</div>
