@@ -8,7 +8,7 @@ import {resolve} from 'path';
 
 import {db} from './database';
 
-import {router as person} from './services/person/api';
+import {PersonRouter} from './services/person/api';
 
 export const app = express['default']();
 
@@ -20,7 +20,7 @@ app.use(bodyParser.json());
 app.use(db());
 
 // register routers
-app.use('/api/v1/person', person);
+app.use('/api/v1/person', new PersonRouter().build());
 
 // serve files from ../client as static content
 app.use(express.static(resolve(__dirname, '..', 'client')));
