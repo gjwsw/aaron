@@ -1,5 +1,7 @@
 [![travis](https://img.shields.io/travis/gjwsw/aaron.svg?style=flat-square)](https://travis-ci.org/gjwsw/aaron)
 
+*THIS PROJECT IS DISCONTINUED!* It is in no stable state, not useable, nothing! If you really want to use it, give it a shot. But don't expect anything of it.
+
 # aaron
 
 *aaron* is a fully-integrated web-based church management system.
